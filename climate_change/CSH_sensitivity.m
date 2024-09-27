@@ -12,8 +12,13 @@ W1 = W_minus - ref; %wind-
 W2 = W_plus - ref; %wind+
 
 %% Plot 
+figure
+P=get(gcf,'position');
+P(3)=P(3)*4;
+P(4)=P(4)*2;
+set(gcf,'position',P);
+set(gcf,'PaperPositionMode','auto');
 
-figure; 
 %reference
 subplot(2,4,1);hold on
 pcolor(disti12,Zi,ref'*100); shading interp; cmocean('balance',18);
@@ -23,10 +28,10 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);ylabel('Depth [m]')
+xlim([0 200])
 box on
-title('V 5S-16S [ref]');
+title('[Ref]');
 colorbar
 ax = gca;
 ax.FontSize = 20;
@@ -43,10 +48,10 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);%ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);%ylabel('Depth [m]')
+xlim([0 200])
 box on
-title('V 5S-16S [T+]');
+title('[T+]');
 colorbar
 ax = gca;
 ax.FontSize = 20;
@@ -63,10 +68,10 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);%ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);%ylabel('Depth [m]')
+xlim([0 200])
 box on
-title('V 5S-16S [W-]');
+title('[W -]');
 colorbar
 ax = gca;
 ax.FontSize = 20;
@@ -83,10 +88,10 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);%ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);%ylabel('Depth [m]')
+xlim([0 200])
 box on
-title('V 5S-16S [W+]');
+title('[W +]');
 colorbar
 ax = gca;
 ax.FontSize = 20;
@@ -103,8 +108,8 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);ylabel('Depth [m]')
+xlim([0 200])
 box on
 title('[T+] - [Ref]');
 colorbar
@@ -123,8 +128,8 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);%ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);%ylabel('Depth [m]')
+xlim([0 200])
 box on
 title('[W-] - [Ref]');
 colorbar
@@ -143,8 +148,8 @@ clabel(C,h,[-50:10:-10],'color',[.5 .5 .5],'fontsize',14);
 [C h]=contour(disti12, Zi, ref', [0:10:50],'w-','linestyle','-','linewidth',2,'Color',[.5 .5 .5]);
 clabel(C,h,[-50:10:50],'color',[.5 .5 .5],'fontsize',14);
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-ylim([-300 0]);%ylabel('Depth [m]')
-xlim([0 250])
+ylim([-200 0]);%ylabel('Depth [m]')
+xlim([0 200])
 box on
 title('[W+] - [Ref]');
 colorbar

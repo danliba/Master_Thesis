@@ -15,6 +15,7 @@ Wplus=struct2array(load(fullfile(p4,'WMLD_MLD.mat'), 'MLD'));
 load('MLD.mat');
 load('NINO9798.mat');
 
+[mask,LON,LAT,~]=lets_get_started_CC;
 %% ----- transform Cross Shore
 [ref1,~]=MLD_2_CrossShore(ref,1);
 [Tplus1,~]=MLD_2_CrossShore(Tplus,1);
@@ -22,6 +23,7 @@ load('NINO9798.mat');
 [Wplus1,~]=MLD_2_CrossShore(Wplus,1);
 [~,MLD_N]=MLD_2_CrossShore(MLD,0);
 %-------
+indxlon = find(LON(:,1)>= -85 & LON(:,1)<=-75);
 loni = LON(indxlon,1);
 loncut = find(loni>= -80);
 MLD_NINO9798 = mean(MLD_N(loncut,EN9798_index),2);
@@ -30,16 +32,19 @@ distance_km12 = calculate_longitudinal_distance(-12,5); %latitude, longitude
 disti12 = flip(linspace(0,distance_km12,size(Wplus1,1)));
 
 %% --- Plot 
+matblue = [0, 0.4470, 0.7410];
+matred = [0.8500, 0.3250, 0.0980];
+matyellow = [0.9290 0.6940 0.1250];
 
 figure;hold on; 
-plot(disti12,-ref1,'linewidth',3,'Color','k'); 
-plot(disti12,-Tplus1,'linewidth',3); 
-plot(disti12,-Wminus1,'linewidth',3);
-plot(disti12,-Wplus1,'linewidth',3);
+plot(disti12,-ref1,'linewidth',4,'Color','k'); 
+plot(disti12,-Tplus1,'linewidth',3,'Color',matred); 
+plot(disti12,-Wminus1,'linewidth',3,'Color',matyellow);
+plot(disti12,-Wplus1,'linewidth',3,'Color',matblue);
 %plot(disti12,-MLD_NINO9798,'linewidth',2,'Color','r','linestyle','--'); 
 
 set(gca, 'xdir', 'reverse');xlabel('Distance [km]');
-xlim([0 300]); title('Mixed Layer Depth [5-16S]');
+xlim([0 200]); title('Mixed Layer Depth');
 legend('ref','T+','W-','W+');
 ax = gca;
 ax.FontSize = 20;
