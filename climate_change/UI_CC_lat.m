@@ -59,6 +59,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$\mathrm{m \cdot d^{-1}}$','interpreter','latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %BUI
 subplot(2,3,2); hold on
@@ -69,6 +70,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$\mathrm{m^{2} \cdot s^{-1}}$','interpreter','latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %CUTI
 subplot(2,3,3);hold on
@@ -79,6 +81,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$\mathrm{m^{2} \cdot s^{-1}}$','interpreter','latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %BEUTI
 subplot(2,3,4);hold on
@@ -89,6 +92,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$m mol \cdot m^{-1} \cdot s^{-1}$', 'Interpreter', 'latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %CUI
 subplot(2,3,5); hold on
@@ -99,6 +103,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$^\circ C$','interpreter','latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %HUI
 subplot(2,3,6); hold on
@@ -109,6 +114,7 @@ ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$\mathrm{m \cdot d^{-1}}$','interpreter','latex');
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+box on;
 
 %% now the W at mld
 %[climW, ~] = calculateClimatologyAndAnomalies(zoo, time);
@@ -123,6 +129,12 @@ nW1 = mean(W1,2,'omitnan');
 nW2 = mean(W2,2,'omitnan');
 nW3 = mean(W3,2,'omitnan');
 nW4 = mean(W4,2,'omitnan');
+
+%season
+sW1 = mean(W1,1,'omitnan');
+sW2 = mean(W2,1,'omitnan');
+sW3 = mean(W3,1,'omitnan');
+sW4 = mean(W4,1,'omitnan');
 
 %% -- THE WMLD during ENSO 97/98
 load('MLD_W_1990_2010.mat');
@@ -154,7 +166,8 @@ c=plot(movmean(nW2,13),lati,'linewidth',2); %movmean(nW2,13) movmean(nW3,13
 d=plot(movmean(nW3,13),lati,'linewidth',2); %movmean(nW2,13) movmean(nW3,13
 hold on
 e=plot(movmean(wmldEN*86400,13),lati,'r--','linewidth',2);
-legend([a,b,c,d,e],'Ref','W+','T+','W-','EN 97/98'); title('Simulated upward Velocity [m/s]');
+legend([a,b,c,d,e],'Ref','W+','T+','W-','EN 97/98'); 
+title('Simulated W');
 ax = gca; grid minor;
 ax.FontSize = 20;
 ylabel('Latitude'); xlabel('$\mathrm{m \cdot d^{-1}}$','interpreter','latex');
@@ -164,7 +177,7 @@ set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
 
 timeclim=[1:12]';
 grey = [0.5 0.5 0.5];
-ylab={'20S','15S','10S','5S'};
+ylab={'20°S','15°S','10°S','5°S'};
 xlab={'J','F','M','A','M','J','J','A','S','O','N','D'};
 
 
@@ -234,7 +247,7 @@ set(gca, 'TickDir', 'out'); % Set the ticks to be outside
 subplot(2, 4, 4);
 [c,h]=contourf(timeclim,lati,W4,[-10:0.01:10]);colorbar; 
 cmocean('balance',17); clabel(c,h);set(h,'LineColor','none'); 
-title('Simulated W [Wind-]','fontsize',22); 
+title('Simulated W [Wind+]','fontsize',22); 
 ax = gca;
 ax.FontSize = 20;
 %ylabel('Latitude'); 
@@ -325,3 +338,110 @@ c.Label.FontSize = 20;
 set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
 set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
 set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+
+%% for thesis
+figure
+P=get(gcf,'position');
+P(3)=P(3)*1.7;
+P(4)=P(4)*2;
+set(gcf,'position',P);
+set(gcf,'PaperPositionMode','auto');
+
+subplot(2, 2, 1);
+[c,h]=contourf(timeclim,lati,movmean(W1,13,1),[-10:0.01:10]);colorbar; 
+cmocean('balance',17); clabel(c,h);set(h,'LineColor','none'); 
+title('Simulated W [Ref]','fontsize',22); 
+ax = gca;
+ax.FontSize = 20;
+ylabel('Latitude'); 
+xlabel('Months');
+caxis([-2 2]);
+ticks = -2:0.5:2;
+c=colorbar('YTick', ticks, 'YTickLabel', arrayfun(@num2str, ticks, 'UniformOutput', false));
+c.Label.String = '$\mathrm{m \cdot d^{-1}}$';
+c.Label.Interpreter = 'latex';
+c.Label.FontSize = 20;
+set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
+set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+
+%--T+
+subplot(2, 2, 2);
+[c,h]=contourf(timeclim,lati,movmean([W2 - W1],13,1),[-10:0.01:10]);colorbar; 
+%[c,h]=contourf(timeclim,lati,[movmean(W2,13,1)-movmean(W1,13,1)],[-10:0.01:10]);colorbar; 
+cmocean('balance',9); clabel(c,h);set(h,'LineColor','none'); 
+title('[T +] - [ref]','fontsize',22); 
+ax = gca;
+ax.FontSize = 20;
+%ylabel('Latitude'); 
+xlabel('Months');
+caxis([-1.4 1.4]);
+ticks = -1.6:0.4:1.6;
+c=colorbar('YTick', ticks, 'YTickLabel', arrayfun(@num2str, ticks, 'UniformOutput', false));
+c.Label.String = '$\mathrm{m \cdot d^{-1}}$';
+c.Label.Interpreter = 'latex';
+c.Label.FontSize = 20;
+set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
+set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+
+%--wind -
+subplot(2, 2, 3);
+[c,h]=contourf(timeclim,lati,movmean([W3 - W1],13,1),[-10:0.01:10]);colorbar; 
+cmocean('balance',9); clabel(c,h);set(h,'LineColor','none'); 
+title('[Wind -] - [ref]','fontsize',22); 
+ax = gca;
+ax.FontSize = 20;
+%ylabel('Latitude'); 
+xlabel('Months');
+caxis([-1.4 1.4]);
+ticks = -1.6:0.4:1.6;
+c=colorbar('YTick', ticks, 'YTickLabel', arrayfun(@num2str, ticks, 'UniformOutput', false));
+c.Label.String = '$\mathrm{m \cdot d^{-1}}$';
+c.Label.Interpreter = 'latex';
+c.Label.FontSize = 20;
+set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
+set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+
+%--- wind + 
+subplot(2, 2, 4);
+[c,h]=contourf(timeclim,lati,movmean([W4 - W1],13,1),[-10:0.01:10]);colorbar; 
+cmocean('balance',9); clabel(c,h);set(h,'LineColor','none'); 
+title('[Wind +] - [ref]','fontsize',22); 
+ax = gca;
+ax.FontSize = 20;
+%ylabel('Latitude'); 
+xlabel('Months');
+caxis([-1.4 1.4]);
+ticks = -1.6:0.4:1.6;
+c=colorbar('YTick', ticks, 'YTickLabel', arrayfun(@num2str, ticks, 'UniformOutput', false));
+c.Label.String = '$\mathrm{m \cdot d^{-1}}$';
+c.Label.Interpreter = 'latex';
+c.Label.FontSize = 20;
+set(gca,'ytick',[-20:5:-5],'yticklabel',ylab,'ylim',[-20 -5]);
+set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
+set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+%% climatologies
+matblue = [0, 0.4470, 0.7410];
+matred = [0.8500, 0.3250, 0.0980];
+matyellow = [0.9290 0.6940 0.1250];
+
+
+figure; hold on
+a=plot([1:12],sW1,'Color','k','linewidth',3);%ref
+b=plot([1:12],sW2,'Color',matred,'linewidth',2); %temp +
+c=plot([1:12],sW3,'Color',matyellow,'linewidth',2); %wind -
+d=plot([1:12],sW4,'Color',matblue,'linewidth',2); %wind + 
+set(gca,'xtick',[1:1:12],'xticklabel',xlab,'xlim',[1 12]);
+set(gca, 'TickDir', 'out'); % Set the ticks to be outside
+
+title('Seasonality','fontsize',22); 
+ax = gca;
+ax.FontSize = 20;
+ylabel('$\mathrm{m \cdot d^{-1}}$','interpreter','latex');
+xlabel('Months');
+grid on;
+
+legend([a,b,d,c],{'ref','T+','W +','W -'},'orientation','horizontal');
+box on;
